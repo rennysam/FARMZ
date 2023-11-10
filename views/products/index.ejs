@@ -1,0 +1,41 @@
+<% layout('layouts/boilerplate') %>
+
+<div id="cluster-map"></div>
+<h1>All Products</h1>
+<!-- <div><a href="/products/new">Add campgound</a></div> -->
+
+<% for(let product of products) {%>
+<div class="card mb-3">
+  <div class="row">
+    <div class="col-md-4">
+      <% if(product.images.length){ %>
+      <img class="img-fluid" alt="" src="<%= product.images[0].url%>" />
+      <% }else {%>
+      <img
+        class="img-fluid"
+        alt=""
+        src="https://res.cloudinary.com/igoswamik/image/upload/v1617456429/Farmz/rnxtlbcytd7obessayli.png"
+      />
+      <% } %>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><%= product.title %></h5>
+        <p class="card-text"><%= product.description %></p>
+        <p class="card-text">
+          <small class="text-muted"><%= product.location %></small>
+        </p>
+        <a href="/products/<%= product._id%>" class="btn btn-primary"
+          >view <%=product.title%>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<% } %>
+
+<script>
+  const mapToken= '<%-process.env.MAPBOX_TOKEN%>' ;
+  const products={features: <%-JSON.stringify(products)%>};    //in mapboxClustermap all data ex geometry etc is defined inside an object under features therefore we set campgroungs stringified data under features (https://docs.mapbox.com/mapbox-gl-js/assets/earthquakes.geojson)
+</script>
+<script src="/javascripts/clusterMap.js"></script>
